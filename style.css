@@ -1,0 +1,268 @@
+/* 全体の基本設定 */
+body {
+    font-family: 'Noto Sans JP', sans-serif;
+    margin: 0;
+    color: #333;
+    background-color: #fdfdfd;
+    line-height: 1.8;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ヘッダー */
+header {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 15px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+header nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+header nav li {
+    display: inline-block;
+    margin-left: 30px;
+}
+
+header nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 700;
+    transition: color 0.3s;
+}
+
+header nav a:hover {
+    color: #e60073;
+}
+
+/* メインコンテンツ */
+main {
+    padding-top: 70px; /* ヘッダーの高さ分 */
+}
+
+.content-section {
+    padding: 80px 0;
+}
+
+.content-section h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.bg-gray {
+    background-color: #f4f4f4;
+}
+
+/* メインビジュアル */
+#hero {
+    background-image: url('https://via.placeholder.com/1500x800'); /* メイン画像を指定 */
+    height: 60vh;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+}
+
+.hero-text {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 30px 50px;
+    border-radius: 5px;
+}
+
+.hero-text h2 {
+    font-size: 48px;
+    margin: 0 0 10px 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* News */
+.news-list {
+    list-style: none;
+    padding: 0;
+}
+.news-list li {
+    border-bottom: 1px solid #ddd;
+    padding: 15px 0;
+    display: flex;
+    align-items: center;
+}
+.news-list .date {
+    min-width: 100px;
+    color: #777;
+}
+.news-list .label {
+    background-color: #333;
+    color: white;
+    font-size: 12px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    margin: 0 20px;
+}
+.news-list a {
+    text-decoration: none;
+    color: #333;
+    transition: color 0.3s;
+}
+.news-list a:hover {
+    color: #e60073;
+}
+
+
+/* Biography */
+.bio-flex {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+.bio-image {
+    flex: 1;
+}
+.bio-image img {
+    max-width: 100%;
+    border-radius: 5px;
+}
+.bio-text {
+    flex: 2;
+}
+
+/* Discography */
+.disc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+.disc-item {
+    text-align: center;
+}
+.disc-item img {
+    max-width: 100%;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    margin-bottom: 15px;
+}
+.disc-item h3 {
+    margin: 0 0 5px 0;
+}
+.disc-item p {
+    margin: 0;
+    color: #777;
+}
+
+/* Live/Tour */
+.live-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+.live-table th, .live-table td {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+}
+.live-table th {
+    background-color: #333;
+    color: white;
+}
+
+
+/* Contact */
+#contact {
+    text-align: center;
+}
+.contact-button {
+    display: inline-block;
+    background-color: #e60073;
+    color: white;
+    padding: 15px 40px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 700;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+.contact-button:hover {
+    background-color: #c40062;
+}
+.sns-links {
+    margin-top: 40px;
+}
+.sns-links a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #555;
+    font-weight: 700;
+}
+.sns-links a:hover {
+    color: #e60073;
+}
+
+
+/* フッター */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+}
+
+/* レスポンシブ対応 (スマートフォン向け) */
+@media (max-width: 768px) {
+    header .container {
+        flex-direction: column;
+    }
+    header nav ul {
+        margin-top: 10px;
+    }
+    header nav li {
+        margin: 0 10px;
+    }
+    main {
+        padding-top: 120px; /* スマホ時のヘッダーの高さ */
+    }
+    .content-section {
+        padding: 60px 0;
+    }
+    .hero-text h2 {
+        font-size: 32px;
+    }
+    .bio-flex {
+        flex-direction: column;
+    }
+    .news-list li {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    .news-list .label {
+        margin: 0 0 0 0;
+    }
+}
