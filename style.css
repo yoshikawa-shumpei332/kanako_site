@@ -79,18 +79,38 @@ main {
 .bg-gray {
     background-color: #f4f4f4;
 }
+/* メインビジュアル スライドショー */
+#hero-slider {
+    position: relative; /* 子要素を絶対位置で配置するための基準 */
+    width: 100%;
+    height: 70vh; /* 画面の高さの70% */
+    overflow: hidden; /* はみ出した要素を隠す */
+}
 
-/* メインビジュアル */
-#hero {
-    background-image: url('https://via.placeholder.com/1500x800'); /* メイン画像を指定 */
-    height: 60vh;
+.slide-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background-size: cover;
     background-position: center;
+    
+    /* フェードイン・アウトのアニメーション設定 */
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+
+    /* テキストを中央に配置 */
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     color: white;
+}
+
+/* 表示されているスライド */
+.slide-item.active {
+    opacity: 1;
 }
 
 .hero-text {
@@ -105,6 +125,28 @@ main {
     font-family: 'Montserrat', sans-serif;
 }
 
+/* スライド位置を示すドット */
+.slider-dots {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.dot.active {
+    background-color: white;
+}
 /* News */
 .news-list {
     list-style: none;
@@ -155,28 +197,6 @@ main {
     flex: 2;
 }
 
-/* Discography */
-.disc-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-}
-.disc-item {
-    text-align: center;
-}
-.disc-item img {
-    max-width: 100%;
-    border-radius: 5px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    margin-bottom: 15px;
-}
-.disc-item h3 {
-    margin: 0 0 5px 0;
-}
-.disc-item p {
-    margin: 0;
-    color: #777;
-}
 
 /* Live/Tour */
 .live-table {
@@ -252,7 +272,7 @@ footer {
         padding: 60px 0;
     }
     .hero-text h2 {
-        font-size: 32px;
+        font-size: 28px;
     }
     .bio-flex {
         flex-direction: column;
