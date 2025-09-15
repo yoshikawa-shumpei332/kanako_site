@@ -254,6 +254,49 @@ footer {
     padding: 20px 0;
 }
 
+/* お問い合わせ専用ページ用スタイル */
+.contact-page-container {
+    max-width: 600px;
+    margin: 60px auto;
+    padding: 40px;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.form-buttons-container {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column; /* ボタンを縦に並べる */
+    gap: 20px; /* ボタンとボタンの間隔 */
+    align-items: center; /* ボタンを中央揃え */
+}
+
+.form-button {
+    display: block;
+    width: 90%;
+    max-width: 400px;
+    padding: 18px 20px;
+    background-color: #333;
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.form-button:hover {
+    background-color: #e60073; /* ホバー時の色 */
+    transform: translateY(-2px); /* 少し浮き上がる効果 */
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 50px;
+    color: #555;
+    text-decoration: none;
+}
+
 /* レスポンシブ対応 (スマートフォン向け) */
 @media (max-width: 768px) {
     header .container {
