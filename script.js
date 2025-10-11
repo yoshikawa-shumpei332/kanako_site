@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
  */
 function loadLiveSchedule(tableBody) {
     // ↓↓↓ 必ずあなたのGoogleスプレッドシートの公開URLに書き換えてください ↓↓↓
-    const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRy_PvS4mJCtlzzI6yivqzHS6izsdbMIdCXLEKraHilxAR2xpZa6m3OC0ZQkE4aMrLJ4BdxSAGU2moL/pub?gid=0&single=true&output=csv';
+    const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS_tunqBSN0hqHBEu9z8kRyjda6ik3Ksz9cxuPnbtEM4GcNf4RpWYXY4khPEMcffhwPcg8F_k19SvCB/pub?gid=0&single=true&output=csv';
 
     fetch(sheetUrl)
         .then(response => {
