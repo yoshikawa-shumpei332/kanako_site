@@ -86,26 +86,25 @@ main {
 }
 /* メインビジュアル スライドショー */
 #hero-slider {
-    position: relative; /* 子要素を絶対位置で配置するための基準 */
+    position: relative; 
     width: 100%;
-    height: 70vh; /* 画面の高さの70% */
-    overflow: hidden; /* はみ出した要素を隠す */
+    height: 70vh; 
+    overflow: hidden; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .slide-item {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 50%;
+    /* スライドの絶対位置指定とアニメーション設定を削除 */
+    width: 50%; /* 50%から100%に変更 */
     height: 100%;
     background-size: cover;
     background-position: center;
     
-    /* フェードイン・アウトのアニメーション設定 */
-    opacity: 0;
-    transition: opacity 1.5s ease-in-out;
+    /* 常に表示されるように opacity: 1; にします（デフォルトなので記述不要） */
 
-    /* テキストを中央に配置 */
+    /* テキストを中央に配置する設定はそのまま残します */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -113,10 +112,6 @@ main {
     color: white;
 }
 
-/* 表示されているスライド */
-.slide-item.active {
-    opacity: 1;
-}
 
 .hero-text {
     background-color: rgba(0, 0, 0, 0.5);
@@ -130,28 +125,7 @@ main {
     font-family: 'Montserrat', sans-serif;
 }
 
-/* スライド位置を示すドット */
-.slider-dots {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 10px;
-}
 
-.dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.5);
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.dot.active {
-    background-color: white;
-}
 /* News */
 .news-list {
     list-style: none;
