@@ -1,53 +1,7 @@
 // ページが読み込まれたら、中の処理をすべて実行する
 document.addEventListener('DOMContentLoaded', function() {
 
-    // --- スライドショーの処理 ---
-    const slider = document.querySelector('#hero-slider');
-    // もしスライダーがこのページに存在したら、関連する処理を実行
-    if (slider) {
-        const slides = document.querySelectorAll('.slide-item');
-        const dotsContainer = document.querySelector('.slider-dots');
-        
-        if (slides.length > 0) {
-            slides.forEach((slide, index) => {
-                const dot = document.createElement('span');
-                dot.classList.add('dot');
-                if (index === 0) {
-                    dot.classList.add('active');
-                }
-                dotsContainer.appendChild(dot);
-            });
-
-            const dots = document.querySelectorAll('.dot');
-            let currentSlide = 0;
-            let slideInterval;
-
-            function showSlide(n) {
-                slides[currentSlide].classList.remove('active');
-                dots[currentSlide].classList.remove('active');
-                currentSlide = (n + slides.length) % slides.length;
-                slides[currentSlide].classList.add('active');
-                dots[currentSlide].classList.add('active');
-            }
-
-            dots.forEach((dot, index) => {
-                dot.addEventListener('click', () => {
-                    showSlide(index);
-                    clearInterval(slideInterval);
-                    startAutoPlay();
-                });
-            });
-            
-            function startAutoPlay() {
-                clearInterval(slideInterval);
-                slideInterval = setInterval(() => {
-                    showSlide(currentSlide + 1);
-                }, 5000);
-            }
-
-            startAutoPlay();
-        }
-    }
+    
 
     // --- ライブスケジュールの処理 ---
     const scheduleTableBody = document.getElementById('live-schedule-body');
