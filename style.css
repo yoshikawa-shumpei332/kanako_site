@@ -412,4 +412,15 @@ footer {
     .news-list .label {
         margin: 0 0 0 0;
     }
+    .slide-item {
+        width: 100%;
+    }
+    .live-table {
+        min-width: 600px; 
+    }
+    .live-table th, .live-table td {
+        overflow: visible; 
+        text-overflow: clip;
+    }
+
 }
