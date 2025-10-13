@@ -183,7 +183,7 @@ main {
     width: 100%;
     border-collapse: collapse;
     text-align: left;
-    table-layout: fixed; /* ✨テーブルのレイアウトを固定 */
+    table-layout: auto; /* ✨テーブルのレイアウトを固定 */
 }
 
 .live-table th, .live-table td {
@@ -191,25 +191,11 @@ main {
     border-bottom: 1px solid #ddd;
     /* ✨はみ出したテキストを...で省略表示 */
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .live-table th {
     background-color: #333;
     color: white;
-}
-
-/* ✨ 各列の幅を割合で指定 */
-/* 1 + 2 + 5 = 8 */
-.live-table th:nth-child(1), .live-table td:nth-child(1) {
-    width: 12.5%; /* 1/8 */
-}
-.live-table th:nth-child(2), .live-table td:nth-child(2) {
-    width: 25%;   /* 2/8 */
-}
-.live-table th:nth-child(3), .live-table td:nth-child(3) {
-    width: 62.5%; /* 5/8 */
 }
 
 
