@@ -1,15 +1,96 @@
 // ページが読み込まれたら、中の処理をすべて実行する
 document.addEventListener('DOMContentLoaded', function() {
 
-    
-
     // --- ライブスケジュールの処理 ---
     const scheduleTableBody = document.getElementById('live-schedule-body');
-    // もしライブ予定表がこのページに存在したら、読み込み関数を実行
     if (scheduleTableBody) {
         loadLiveSchedule(scheduleTableBody);
     }
+
+    // ▼▼▼ 以前追加したスライドショーのJSをこの内容に置き換えてください ▼▼▼
+    // --- Past Events スライドショーの処理 ---
+    const slideshowContainer = document.querySelector('.slideshow-container');
+    if (slideshowContainer) {
+        initializeSlideshow();
+    }
 });
+
+
+let slideIndex = 1;
+let slideshowTimeout; // 自動再生用のタイマー変数を宣言
+
+function initializeSlideshow() {
+    const slides = document.querySelectorAll(".slides");
+    const thumbnailContainer = document.querySelector(".thumbnail-container");
+
+    // スライドがなければ処理を終了
+    if (slides.length === 0) return;
+
+    // サムネイルを動的に生成
+    slides.forEach((slide, index) => {
+        const img = slide.querySelector('img');
+        const thumb = document.createElement('img');
+        thumb.src = img.src;
+        thumb.alt = img.alt;
+        thumb.classList.add('thumbnail-item');
+        thumb.addEventListener('click', () => currentSlide(index + 1));
+        thumbnailContainer.appendChild(thumb);
+    });
+
+    // イベントリスナーを設定
+    document.querySelector('.prev').addEventListener('click', () => plusSlides(-1));
+    document.querySelector('.next').addEventListener('click', () => plusSlides(1));
+    
+    // タッチイベント（スワイプ）の設定
+    let touchStartX = 0;
+    const slideshowContainer = document.querySelector('.slideshow-container');
+    slideshowContainer.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    slideshowContainer.addEventListener('touchend', (e) => {
+        const touchEndX = e.changedTouches[0].screenX;
+        if (touchStartX - touchEndX > 50) { // 左スワイプ
+            plusSlides(1);
+        } else if (touchEndX - touchStartX > 50) { // 右スワイプ
+            plusSlides(-1);
+        }
+    });
+
+    showSlides(slideIndex);
+}
+
+// 次/前のスライドへ
+function plusSlides(n) {
+    showSlides(slideIndex += n);
+}
+
+// サムネイルクリックで指定のスライドへ
+function currentSlide(n) {
+    showSlides(slideIndex = n);
+}
+
+// メインのスライド表示関数
+function showSlides(n) {
+    const slides = document.querySelectorAll(".slides");
+    const thumbnails = document.querySelectorAll(".thumbnail-item");
+
+    // インデックスの範囲チェック
+    if (n > slides.length) { slideIndex = 1; }
+    if (n < 1) { slideIndex = slides.length; }
+
+    // 全てのスライドとサムネイルを非アクティブに
+    slides.forEach(slide => slide.style.display = "none");
+    thumbnails.forEach(thumb => thumb.classList.remove("active"));
+
+    // 対象のスライドとサムネイルをアクティブに
+    slides[slideIndex - 1].style.display = "block";
+    thumbnails[slideIndex - 1].classList.add("active");
+    
+    // 自動再生タイマーをリセットして再開
+    clearTimeout(slideshowTimeout);
+    slideshowTimeout = setTimeout(() => plusSlides(1), 8000); // 4秒後に次のスライドへ
+}
 
 
 /**
