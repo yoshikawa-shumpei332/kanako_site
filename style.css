@@ -448,18 +448,21 @@ footer {
 /* レスポンシブ対応 (スマートフォン向け) */
 @media (max-width: 768px) {
     header .container {
-        flex-direction: column;
+        /* flex-direction: column; を削除 */
+        flex-wrap: wrap; /* ロゴとナビが画面幅に応じて折り返すようにする */
+        justify-content: center; /* 全体を中央揃えにする */
+        padding: 5px 0;
     }
     header nav ul {
-        margin-top: 10px;
+        margin-top: 0; /* 上の余白をリセット */
+        text-align: center; /* ナビ項目全体を中央に */
     }
     header nav li {
-        display: block;      /* 項目を縦に並べる */
-        margin: 10px 0;      /* 上下の余白を調整 */
-        text-align: center;  /* テキストを中央揃え */
+        display: inline-block;      /* 項目を横並びに戻す */
+        margin: 5px 10px;      /* 上下の余白を減らし、左右の余白を調整 */
     }
     main {
-        padding-top: 230px; /* スマホ時のヘッダーの高さ */
+        padding-top: 150px; /* ヘッダーの高さが減った分、上の余白を大幅に詰める */
     }
     .content-section {
         padding: 60px 0;
