@@ -367,6 +367,84 @@ footer {
     line-height: 1.8;
     border-top: 1px solid #eee;
 }
+
+.slideshow-container {
+    max-width: 50%;
+    position: relative;
+    margin: auto;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.slides {
+    display: none; /* JSで制御 */
+}
+
+.slides img {
+    width: 100%;
+    vertical-align: middle;
+}
+
+/* Next & previous ボタン */
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    transition: 0.3s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    background-color: rgba(0,0,0,0.3);
+}
+
+.next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.prev:hover, .next:hover {
+    background-color: rgba(0,0,0,0.8);
+}
+
+/* サムネイル */
+.thumbnail-container {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.thumbnail-item {
+    width: 100px; /* サムネイルの幅 */
+    height: 60px; /* サムネイルの高さ */
+    object-fit: cover; /* 画像の比率を保ったままトリミング */
+    opacity: 0.6;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    margin: 0 4px;
+}
+
+.thumbnail-item:hover, .thumbnail-item.active {
+    opacity: 1;
+    border-color: #e60073; /* アクティブなサムネイルの枠線の色 */
+}
+
+/* フェードアニメーション */
+.fade {
+    animation-name: fade;
+    animation-duration: 0.5s;
+}
+
+@keyframes fade {
+    from {opacity: .4}
+    to {opacity: 1}
+}
 /* レスポンシブ対応 (スマートフォン向け) */
 @media (max-width: 768px) {
     header .container {
@@ -414,6 +492,16 @@ footer {
     .live-table th, .live-table td {
         overflow: visible;
         text-overflow: clip;
+    }
+
+    .slideshow-container {
+        max-width: 100%; /* スライドショーの横幅を画面いっぱいに */
+    }
+
+    .thumbnail-item {
+        width: 60px; /* サムネイルの幅を小さく */
+        height: 40px; /* サムネイルの高さを小さく */
+        margin: 0 2px; /* サムネイル間の余白を調整 */
     }
     
 
