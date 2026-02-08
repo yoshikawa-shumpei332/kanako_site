@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { IoLogoInstagram } from "react-icons/io5";
+import EventCalendarWrapper from "../components/features/EventCalendarWrapper";
 
 export default function Home() {
 
@@ -72,24 +73,13 @@ export default function Home() {
         </section>
 
         {/* --- Live Schedule --- */}
-        <section id="live" className="py-20 bg-white">
-          <div className="container mx-auto px-4">
-              <h2 className="text-3xl font-serif mb-8 text-center">live schedule</h2>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {/* HTMLにあったスライダーの画像を並べています */}
-                {["S__268574749_0.jpg", "S__268574750_0.jpg", "S__268574751_0.jpg", "S__268574752_0.jpg", "S__268574755_0.jpg", "S__268574756_0.jpg"].map((img, index) => (
-                  <div key={index} className="relative aspect-square">
-                    <Image
-                      src={`/images/${img}`}
-                      alt={`Event ${index + 1}`}
-                      fill
-                      className="object-cover rounded shadow-sm"
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-        </section>
+        <section id="live-calendar" className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-serif mb-10 text-center">Live Calendar</h2>
+          <EventCalendarWrapper />
+          
+        </div>
+      </section>
         
         {/* --- Past Events  --- */}
         <section id="past-events" className="py-20 bg-gray-50">
