@@ -6,6 +6,24 @@ import { ChevronLeft, ChevronRight, Instagram } from "lucide-react";
 
 
 export default function Home() {
+
+  const images = [
+    "S__268574749_0.jpg",
+    "S__268574750_0.jpg",
+    "S__268574751_0.jpg",
+    "S__268574752_0.jpg",
+    "S__268574755_0.jpg",
+    "S__268574756_0.jpg"
+  ];
+  const [currentIndex, setCurrentIndex] = useState(0);
+  useEffect(() => {
+  const timer = setInterval(() => {
+    setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  }, 8000);
+
+  return () => clearInterval(timer);
+  }, [images.length]);
+
   return (
     <div className="min-h-screen font-sans text-gray-800">
       {/* --- ヘッダー --- */}
@@ -77,18 +95,28 @@ export default function Home() {
         <section id="past-events" className="py-20 bg-gray-50">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-serif mb-8 text-center">Past Events</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {/* HTMLにあったスライダーの画像を並べています */}
-              {["S__268574749_0.jpg", "S__268574750_0.jpg", "S__268574751_0.jpg", "S__268574752_0.jpg", "S__268574755_0.jpg", "S__268574756_0.jpg"].map((img, index) => (
-                <div key={index} className="relative aspect-square">
-                  <Image
-                    src={`./images/${img}`}
-                    alt={`Event ${index + 1}`}
-                    fill
-                    className="object-cover rounded shadow-sm"
-                  />
-                </div>
-              ))}
+            <div className="relative max-w-4xl mx-auto rounded-xl overflow-hidden shadow-2xl bg-black/5">
+
+              <div className="relative h-[500px] w-full">
+                <Image 
+                  src={`/images/${images[currentIndex]}`} 
+                  alt="Event" 
+                  fill 
+                  className="object-contain" 
+                />
+              </div>
+              <button 
+                onClick={() => setCurrentIndex(currentIndex === 0 ? images.length - 1 : currentIndex - 1)}
+                className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/50 hover:bg-white/80 p-2 rounded-full z-10"
+              >
+                <ChevronLeft />
+              </button>
+              <button 
+                onClick={() => setCurrentIndex(currentIndex === images.length - 1 ? 0 : currentIndex + 1)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/50 hover:bg-white/80 p-2 rounded-full z-10"
+              >
+                <ChevronRight />
+              </button>
             </div>
           </div>
         </section>
