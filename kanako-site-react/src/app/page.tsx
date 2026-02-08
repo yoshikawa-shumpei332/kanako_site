@@ -2,8 +2,8 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight, Instagram } from "lucide-react";
-
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { IoLogoInstagram } from "react-icons/io5";
 
 export default function Home() {
 
@@ -133,9 +133,17 @@ export default function Home() {
               Contact Form
             </Link>
             <div className="mt-8">
-              <a href="https://www.instagram.com/kanakoochi" target="_blank" rel="noopener noreferrer" className="text-2xl hover:opacity-70">
-                {/* FontAwesomeの代わりに文字やアイコンコンポーネントを配置 */}
-                Instagram
+              <a 
+                href="https://www.instagram.com/kanakoochi" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="inline-flex items-center justify-center hover:opacity-70 transition-opacity"
+              >
+                {/* 2. アイコンを表示。colorに直接色を指定できます */}
+                <IoLogoInstagram 
+                  size={40} 
+                  className="text-[#E1306C]" // インスタの代表的なピンク色を指定
+                />
               </a>
             </div>
           </div>
