@@ -1,5 +1,5 @@
 import { v2 as cloudinary } from 'cloudinary';
-import { NextResponse } from ' next/server'
+import { NextResponse } from 'next/server'
 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -20,8 +20,8 @@ cloudinary.config({
         id: resource.public_id,
         url: resource.secure_url,
         // Cloudinaryの「Context」欄に event_date: 2026-02-15 のように入れている想定
-        date: resource.context?.custom?.event_date || "", 
-      }));
+        date: resource.context?.["event-date"] || resource.context?.event_date || "",
+            }));
 
       return NextResponse.json(events);
     } catch (error) {
