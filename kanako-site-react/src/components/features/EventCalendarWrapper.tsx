@@ -41,9 +41,9 @@ type Event = {
 
 
     return (
-      <div className="flex flex-col md:flex-row gap-8 items-start max-w-5xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-10 gap-8 items-start max-w-6xl mx-auto">
         {/* 左側：予定リスト */}
-        <div className="w-full md:w-1/3 bg-white shadow-lg rounded-xl overflow-hidden border">
+        <div className="md:col-span-4 w-full p-4 bg-white shadow-lg rounded-xl overflow-hidden border">
           <div className="bg-gray-800 text-white p-4 font-bold text-center">
             Upcoming Events
           </div>
@@ -74,11 +74,11 @@ type Event = {
           </div>
         </div>
     
-          <div className="w-full md:w-1/2 min-h-[300px] border-2 border-dashed rounded-xl p-4 flex flex-col items-center justify-center bg-gray-50">
+          <div className="md:col-span-6 w-full max-w-[500px] rounded-xl p-4 flex flex-col items-center justify-center bg-white">
             {selectedEvent ? (
               <div className="text-center w-full">
                 <p className="mb-4 font-bold text-lg">{selectedEvent.date} の公演</p>
-                <div className="relative aspect-[3/4] w-full max-w-[300px] mx-auto">
+                <div className="relative h-[500px] w-full rounded-xl overflow-hidden ">
                   <Image 
                     src={selectedEvent.url} 
                     alt="Event Detail" 
