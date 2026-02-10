@@ -21,6 +21,7 @@ cloudinary.config({
         url: resource.secure_url,
         // Cloudinaryの「Context」欄に event_date: 2026-02-15 のように入れている想定
         date: resource.context?.["event-date"] || resource.context?.event_date || "",
+        event_name: resource.context?.["title"] || "演奏予定",
             }));
 
       return NextResponse.json(events);

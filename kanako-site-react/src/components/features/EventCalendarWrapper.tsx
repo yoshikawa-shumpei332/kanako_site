@@ -8,6 +8,7 @@ type Event = {
     id: string;
     url: string;
     date: string;
+    event_name: string;
   };
 
   export default function EventCalendarWrapper() {
@@ -61,10 +62,10 @@ type Event = {
                       {event.date.replace(/-/g, "/")}
                     </span>
                     <span className="font-medium text-gray-900 italic font-serif">
-                      Live Performance
+                      {event.event_name}
                     </span>
                   </div>
-                  <span className="text-gray-400 text-xl">›</span>
+                  <span className="text-gray-400 text-xl"></span>
                 </button>
               ))
             ) : (
