@@ -19,8 +19,15 @@ type Event = {
       fetch("/api/cloudinary-events")
         .then((res) => res.json())
         .then((data) => {
+          const today = new Date();
+          today.setHours(0,0,0,0);
+
+          const upcomingEvents = data.filter((event: Event) => {
+            const eventDate = new Date(event.date);
+            return eventDate >= today;
+          })
           // 日付順（昇順）に並び替える
-          const sorted = data.sort((a: Event, b: Event) => 
+          const sorted = upcomingEvents.sort((a: Event, b: Event) => 
             new Date(a.date).getTime() - new Date(b.date).getTime()
           );
           setEvents(sorted);
