@@ -14,6 +14,7 @@ type Event = {
   export default function EventCalendarWrapper() {
     const [events, setEvents] = useState<Event[]>([]);
     const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+    const [isZoomed, setIsZoomed] = useState(false);
 
     useEffect(() => {
       fetch("/api/cloudinary-events")
@@ -54,49 +55,51 @@ type Event = {
 
 
     return (
-      <div className="grid grid-cols-1 md:grid-cols-10 gap-8 items-start max-w-6xl mx-auto">
-        {/* 左側：予定リスト */}
-        <div className="md:col-span-4 w-full p-4 bg-white shadow-lg rounded-xl overflow-hidden border">
-          <div className="bg-gray-800 text-white p-4 font-bold text-center">
-            Upcoming Events
+      <>
+        <div className="grid grid-cols-1 md:grid-cols-10 gap-8 items-start max-w-6xl mx-auto">
+          {/* 左側：予定リスト */}
+          <div className="md:col-span-4 w-full p-4 bg-white shadow-lg rounded-xl overflow-hidden border">
+            <div className="bg-gray-800 text-white p-4 font-bold text-center">
+              Upcoming Events
+            </div>
+            <div className="max-h-[500px] overflow-y-auto">
+              {events.length > 0 ? (
+                events.map((event) => (
+                  <button
+                    key={event.id}
+                    onClick={() => setSelectedEvent(event)}
+                    className={`w-full text-left p-4 border-b last:border-0 transition-colors flex justify-between items-center ${
+                      selectedEvent?.id === event.id ? "bg-red-50 border-l-4 border-l-red-500" : "hover:bg-gray-50"
+                    }`}
+                  >
+                    <div>
+                      <span className="block text-sm text-gray-500">
+                        {event.date.replace(/-/g, "/")}
+                      </span>
+                      <span className="font-medium text-gray-900 italic font-serif">
+                        {event.event_name}
+                      </span>
+                    </div>
+                  </button>
+                ))
+              ) : (
+                <p className="p-10 text-center text-gray-400">予定はありません</p>
+              )}
+            </div>
           </div>
-          <div className="max-h-[500px] overflow-y-auto">
-            {events.length > 0 ? (
-              events.map((event) => (
-                <button
-                  key={event.id}
-                  onClick={() => setSelectedEvent(event)}
-                  className={`w-full text-left p-4 border-b last:border-0 transition-colors flex justify-between items-center ${
-                    selectedEvent?.id === event.id ? "bg-red-50 border-l-4 border-l-red-500" : "hover:bg-gray-50"
-                  }`}
-                >
-                  <div>
-                    <span className="block text-sm text-gray-500">
-                      {event.date.replace(/-/g, "/")}
-                    </span>
-                    <span className="font-medium text-gray-900 italic font-serif">
-                      {event.event_name}
-                    </span>
-                  </div>
-                  <span className="text-gray-400 text-xl"></span>
-                </button>
-              ))
-            ) : (
-              <p className="p-10 text-center text-gray-400">予定はありません</p>
-            )}
-          </div>
-        </div>
-    
+      
+          {/* 右側：画像詳細 */}
           <div className="md:col-span-6 w-full max-w-[500px] rounded-xl p-4 flex flex-col items-center justify-center bg-white">
             {selectedEvent ? (
-              <div className="text-center w-full">
+              <div className="text-center w-full group"> 
                 <p className="mb-4 font-bold text-lg">{selectedEvent.date} の公演</p>
                 <div className="relative h-[500px] w-full rounded-xl overflow-hidden ">
                   <Image 
                     src={selectedEvent.url} 
                     alt="Event Detail" 
                     fill 
-                    className="object-contain shadow-md rounded"
+                    className="object-contain shadow-md rounded cursor-zoom-in"
+                    onClick={() => setIsZoomed(true)}
                   />
                   {events.length > 1 && (
                     <>
@@ -113,14 +116,39 @@ type Event = {
                       >
                         <ChevronRight size={24} className="text-white" />
                       </button>
-                  </>
+                    </>
                   )}
                 </div>
-          </div>
+              </div>
             ) : (
-              <p className="text-gray-400 text-center">カレンダーの印がついた日付を選択すると<br/>詳細画像が表示されます</p>
+              <p className="text-gray-400 text-center">予定を選択すると<br/>詳細画像が表示されます</p>
             )}
+          </div> 
+        </div> 
+
+        {isZoomed && selectedEvent && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 animate-in fade-in duration-300">
+            <div 
+              className="absolute inset-0 bg-black/90 cursor-zoom-out" 
+              onClick={() => setIsZoomed(false)} 
+            />
+            <div className="relative w-full h-full max-w-4xl max-h-[90vh] flex items-center justify-center pointer-events-none">
+              <Image
+                src={selectedEvent.url}
+                alt="Zoomed Event"
+                fill
+                className="object-contain"
+                onClick={(e) => e.stopPropagation()}
+              />
+              <button 
+                className="absolute top-0 right-0 p-4 text-white hover:text-gray-300 text-2xl"
+                onClick={() => setIsZoomed(false)}
+              >
+                ×
+              </button>
+            </div>
           </div>
-        </div>
-      );
-    }
+        )}
+      </>
+    );
+  }
