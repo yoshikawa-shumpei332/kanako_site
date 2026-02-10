@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 type Event = {
     id: string;
@@ -13,7 +13,6 @@ type Event = {
 
   export default function EventCalendarWrapper() {
     const [events, setEvents] = useState<Event[]>([]);
-    const [selectedDate, setSelectedDate] = useState<Date>(new Date());
     const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
 
     useEffect(() => {
@@ -26,7 +25,7 @@ type Event = {
           const upcomingEvents = data.filter((event: Event) => {
             const eventDate = new Date(event.date);
             return eventDate >= today;
-          })
+          });
           // 日付順（昇順）に並び替える
           const sorted = upcomingEvents.sort((a: Event, b: Event) => 
             new Date(a.date).getTime() - new Date(b.date).getTime()
@@ -38,6 +37,20 @@ type Event = {
         })
         .catch((err) => console.error(err));
     }, []);
+
+    const handlePrev = () => {
+      if (!selectedEvent || events.length === 0) return;
+      const currentIndex = events.findIndex(e => e.id === selectedEvent.id);
+      const prevIndex = (currentIndex -1 + events.length) % events.length;
+      setSelectedEvent(events[prevIndex]);
+    };
+
+    const handleNext = () => {
+      if (!selectedEvent || events.length === 0) return;
+      const currentIndex = events.findIndex(e => e.id === selectedEvent.id);
+      const nextIndex = (currentIndex + 1) % events.length;
+      setSelectedEvent(events[nextIndex])
+    }
 
 
     return (
@@ -85,8 +98,25 @@ type Event = {
                     fill 
                     className="object-contain shadow-md rounded"
                   />
+                  {events.length > 1 && (
+                    <>
+                      <button 
+                        onClick={handlePrev}
+                        className="absolute left-4 top-1/2 -translate-y-1/2 bg-gray-500/80 hover:bg-gray-900 p-3 rounded-full shadow-lg z-10 transition-all opacity-100 md:opacity-0 md:group-hover:opacity-100"
+                      >
+                        <ChevronLeft size={24} className="text-white" /> 
+                      </button>
+
+                      <button 
+                        onClick={handleNext}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 bg-gray-500/80 hover:bg-gray-900 p-3 rounded-full shadow-lg z-10 transition-all opacity-100 md:opacity-0 md:group-hover:opacity-100"
+                      >
+                        <ChevronRight size={24} className="text-white" />
+                      </button>
+                  </>
+                  )}
                 </div>
-              </div>
+          </div>
             ) : (
               <p className="text-gray-400 text-center">カレンダーの印がついた日付を選択すると<br/>詳細画像が表示されます</p>
             )}
