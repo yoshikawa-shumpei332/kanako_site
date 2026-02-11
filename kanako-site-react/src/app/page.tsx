@@ -73,7 +73,7 @@ export default function Home() {
         </section>
 
         {/* --- Live Schedule --- */}
-        <section id="live-calendar" className="py-20 bg-white">
+        <section id="live" className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-serif mb-10 text-center">Live Calendar</h2>
           <EventCalendarWrapper />
