@@ -489,29 +489,27 @@ footer {
     }
 }
 
-:root {
-    --white: #f9f9f9;
-    --black: #36383F;
-    --grey: #85888C;
-}
-
 /* Header */
 .header {
-    background-color: var(--black);
-    box-shadow: 1px 1px 5px 0px var(--grey);
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     position: sticky;
     top: 0;
     width: 100%;
+    /*画面で一番上に載せる*/
     z-index: 1000;
 }
 
 /* Logo */
 .logo {
-    display: inline-block;
-    color: var(--white);
-    font-size: 60px;
-    margin-left: 10px;
-
+    font-family: 'Montserrat', sans-serif;
+    font-size: 45px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 0;
+    padding-left: 20px;
+    text-decoration: none;
+    color: #333;
 }
 
 /* Nav menu */
@@ -519,20 +517,27 @@ footer {
     width: 100%;
     height: 100%;
     position: fixed;
-    background-color: var(--black);
+    background-color: rgba(255, 255, 255, 0.9);
     overflow: hidden;
+    /*Headerの下に*/
     z-index: 999;
+}
+
+.nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
 .menu a {
     display: block;
     padding: 30px;
-    color: var(--white);
-
+    color: #333;
+    text-decoration: none;
 }
 
 .menu a:hover {
-    background-color: var(--grey);
+    color: #e60073;
 }
 
 .nav {
@@ -550,7 +555,7 @@ footer {
 
 
 .hamb-line {
-    background: var(--white);
+    background: #333;
     display: block;
     height: 2px;
     position: relative;
@@ -560,7 +565,7 @@ footer {
 
 .hamb-line::before,
 .hamb-line::after {
-    background: var(--white);
+    background: #333;
     content: '';
     display: block;
     height: 100%;
@@ -603,10 +608,9 @@ footer {
     top: 0;
 }
 
-
 /* Responsiveness */
 
-@media (min-width: 768px) {
+@media (min-width: 837px) {
     .nav {
         max-height: none;
         top: 0;
@@ -623,12 +627,10 @@ footer {
 
     .menu a:hover {
         background-color: transparent;
-        color: var(--grey);
-
+        color: #e60073;
     }
 
     .hamb {
         display: none;
     }
-
 }

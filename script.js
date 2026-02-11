@@ -1,5 +1,5 @@
 // ページが読み込まれたら、中の処理をすべて実行する
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
 
     // --- ライブスケジュールの処理 ---
     const scheduleTableBody = document.getElementById('live-schedule-body');
@@ -40,7 +40,7 @@ function initializeSlideshow() {
     // イベントリスナーを設定
     document.querySelector('.prev').addEventListener('click', () => plusSlides(-1));
     document.querySelector('.next').addEventListener('click', () => plusSlides(1));
-    
+
     // タッチイベント（スワイプ）の設定
     let touchStartX = 0;
     const slideshowContainer = document.querySelector('.slideshow-container');
@@ -86,7 +86,7 @@ function showSlides(n) {
     // 対象のスライドとサムネイルをアクティブに
     slides[slideIndex - 1].style.display = "block";
     thumbnails[slideIndex - 1].classList.add("active");
-    
+
     // 自動再生タイマーをリセットして再開
     clearTimeout(slideshowTimeout);
     slideshowTimeout = setTimeout(() => plusSlides(1), 8000); // 4秒後に次のスライドへ
@@ -113,8 +113,8 @@ function loadLiveSchedule(tableBody) {
             const rows = text.split('\n').slice(1);
 
             if (rows.length === 0 || (rows.length === 1 && rows[0].trim() === '')) {
-                 tableBody.innerHTML = '<tr><td colspan="3">現在、予定されているライブはありません。</td></tr>';
-                 return;
+                tableBody.innerHTML = '<tr><td colspan="3">現在、予定されているライブはありません。</td></tr>';
+                return;
             }
 
             rows.forEach(rowText => {
@@ -123,7 +123,7 @@ function loadLiveSchedule(tableBody) {
                 if (cleanRowText === '') return;
 
                 const columns = cleanRowText.split(',');
-                
+
                 if (columns.length >= 3) {
                     const newRow = document.createElement('tr');
 
@@ -163,3 +163,13 @@ function loadLiveSchedule(tableBody) {
             tableBody.innerHTML = '<tr><td colspan="3">スケジュールの読み込みに失敗しました。</td></tr>';
         });
 }
+
+const menuLinks = document.querySelectorAll('.menu a');
+const sideMenu = document.getElementById('side-menu');
+
+menuLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        // Uncheck the checkbox to close the menu
+        sideMenu.checked = false;
+    });
+});
