@@ -6,4 +6,5 @@ First, run the development server:
 npm run dev
 ```
 
-
+npm install lucide-react
+npm install react-icons
