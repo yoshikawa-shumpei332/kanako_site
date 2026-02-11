@@ -468,6 +468,8 @@ footer {
     overflow: hidden;
     /*Headerの下に*/
     z-index: 999;
+    max-height: 0;
+    transition: max-height .5s ease-out;
 }
 
 .nav ul {
@@ -485,11 +487,6 @@ footer {
 
 .menu a:hover {
     color: #e60073;
-}
-
-.nav {
-    max-height: 0;
-    transition: max-height .5s ease-out;
 }
 
 /* Menu Icon */
