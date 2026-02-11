@@ -444,7 +444,7 @@ footer {
     top: 0;
     width: 100%;
     /*画面で一番上に載せる*/
-    z-index: 1000;
+    z-index: 10000;
 }
 
 /* Logo */
@@ -461,15 +461,19 @@ footer {
 
 /* Nav menu */
 .nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
     width: 100%;
-    height: 100%;
-    position: fixed;
+    height: 100vh;
     background-color: rgba(255, 255, 255, 0.9);
-    overflow: hidden;
-    /*Headerの下に*/
-    z-index: 999;
+    overflow-y: auto;
+    /* Allow scrolling if menu is long */
+    /* Start hidden */
     max-height: 0;
-    transition: max-height .5s ease-out;
+    opacity: 0;
+    transition: max-height .5s ease-out, opacity .3s ease;
+    z-index: 9999;
 }
 
 .nav ul {
@@ -534,7 +538,9 @@ footer {
 /* Toggle menu icon */
 
 .side-menu:checked~nav {
-    max-height: 100%;
+    /* Set this to 100vh to cover the whole screen */
+    max-height: 100vh;
+    opacity: 1;
 }
 
 .side-menu:checked~.hamb .hamb-line {
@@ -556,22 +562,36 @@ footer {
 
 @media (min-width: 837px) {
     .nav {
+        /* 1. Reset the "Curtain" mechanics */
         max-height: none;
-        top: 0;
-        position: relative;
-        float: right;
-        width: fit-content;
-        background-color: transparent;
+        height: auto;
+        /* Reset from 100vh */
+        opacity: 1;
+        /* Reset from 0 */
 
+        /* 2. Reset the Positioning */
+        position: static;
+        /* Or relative; puts it back in the header flow */
+        width: auto;
+        float: right;
+        background-color: transparent;
+        overflow: visible;
+        display: block;
+    }
+
+    .nav ul {
+        display: block;
+        /* Reset from flex (if you added vertical centering) */
+        height: auto;
     }
 
     .menu li {
         float: left;
     }
 
-    .menu a:hover {
-        background-color: transparent;
-        color: #e60073;
+    .menu a {
+        padding: 20px;
+        /* Adjust padding for desktop look */
     }
 
     .hamb {
