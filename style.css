@@ -13,59 +13,6 @@ body {
     padding: 0 20px;
 }
 
-/* ヘッダー */
-/* header {
-    background-color: rgba(255, 255, 255, 0.9);
-    padding: 15px 0;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-header .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 24px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    margin: 0;
-} */
-
-/* ✨ この部分を追加 ✨ */
-/* .logo a {
-    text-decoration: none;
-    color: #333;
-}
-
-header nav ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-header nav li {
-    display: inline-block;
-    margin-left: 30px;
-}
-
-header nav a {
-    text-decoration: none;
-    color: #333;
-    font-weight: 700;
-    transition: color 0.3s;
-}
-
-header nav a:hover {
-    color: #e60073;
-} */
-
 /* メインコンテンツ */
 main {
     padding-top: 70px;
