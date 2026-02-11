@@ -564,10 +564,10 @@ footer {
     .nav {
         /* 1. Reset the "Curtain" mechanics */
         max-height: none;
-        height: auto;
         /* Reset from 100vh */
-        opacity: 1;
+        height: auto;
         /* Reset from 0 */
+        opacity: 1;
 
         /* 2. Reset the Positioning */
         position: static;
@@ -580,8 +580,8 @@ footer {
     }
 
     .nav ul {
-        display: block;
         /* Reset from flex (if you added vertical centering) */
+        display: block;
         height: auto;
     }
 
@@ -590,8 +590,8 @@ footer {
     }
 
     .menu a {
-        padding: 20px;
         /* Adjust padding for desktop look */
+        padding: 20px;
     }
 
     .hamb {
