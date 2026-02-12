@@ -6,9 +6,13 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 type Event = {
     id: string;
-    url: string;
+    url?: string;
     date: string;
-    event_name: string;
+    title: string;
+    venue?: string;
+    time?: string;
+    link?: string;
+    type: "image" | "text";
   };
 
   export default function EventCalendarWrapper() {
@@ -77,7 +81,7 @@ type Event = {
                         {event.date.replace(/-/g, "/")}
                       </span>
                       <span className="font-medium text-gray-900 italic font-serif">
-                        {event.event_name}
+                        {event.title}
                       </span>
                     </div>
                   </button>
