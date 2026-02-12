@@ -21,27 +21,52 @@ type Event = {
     const [isZoomed, setIsZoomed] = useState(false);
 
     useEffect(() => {
-      fetch("/api/cloudinary-events")
-        .then((res) => res.json())
-        .then((data) => {
+      const fetchData = async () => {
+        try {
+          const cloudinaryRes = await fetch("/api/cloudinary-events");
+          const cloudinaryData = await cloudinaryRes.json();
+          const cloudinaryEvents: Event[] = cloudinaryData.map((d: any) => ({
+            id: d.id,
+            url: d.url,
+            date: d.date,
+            title: d.event_name || "演奏予定",
+            type:"image",
+          }));
+
+          const sheetUrl = "https://docs.google.com/spreadsheets/d/1TJUWvwA8jjFPqc6vsOK2iRp_OjZ4KcbckmU_q_OHB6U/edit?usp=sharing";
+          const sheetRes = await fetch(sheetUrl);
+          const csvText = await sheetRes.text();
+
+          const sheetRows = csvText.split("\n").slice(1);
+          const sheetEvents: Event[] = sheetRows.map((row, index) => {
+          const [date, venue, title, url, time] = row.split(",");
+          return {
+            id: `sheet-${index}`,
+            date: date?.trim(),
+            venue: venue?.trim(),
+            title: title?.trim(),
+            link: url?.trim(),
+            time: time?.trim(),
+            type: "text",
+          };
+          }).filter(e => e.date);
+
           const today = new Date();
           today.setHours(0,0,0,0);
 
-          const upcomingEvents = data.filter((event: Event) => {
-            const eventDate = new Date(event.date);
-            return eventDate >= today;
-          });
-          // 日付順（昇順）に並び替える
-          const sorted = upcomingEvents.sort((a: Event, b: Event) => 
-            new Date(a.date).getTime() - new Date(b.date).getTime()
-          );
-          setEvents(sorted);
-          
-          // 最初から一番近い予定を表示しておく
-          if (sorted.length > 0) setSelectedEvent(sorted[0]);
-        })
-        .catch((err) => console.error(err));
-    }, []);
+          const allEvents = [...cloudinaryEvents, ...sheetEvents]
+          .filter(e => new Date(e.date) >= today)
+          .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+
+        setEvents(allEvents);
+        if (allEvents.length > 0) setSelectedEvent(allEvents[0]);
+      } catch (err) {
+        console.error("Data fetch error:", err);
+      }
+    };
+
+    fetchData();
+  }, []);
 
     const handlePrev = () => {
       if (!selectedEvent || events.length === 0) return;
