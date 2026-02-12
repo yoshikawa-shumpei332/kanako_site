@@ -167,7 +167,7 @@ type Event = {
                         {selectedEvent.time && (
                           <div className="flex items-center justify-center gap-2">
                             <Clock className="text-red-400" size={20} />
-                            <span>{selectedEvent.time}</span>
+                            <span>開始時間:{selectedEvent.time}</span>
                           </div>
                         )}
                       </div>
