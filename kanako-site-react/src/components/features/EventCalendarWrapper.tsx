@@ -171,17 +171,6 @@ type Event = {
                           </div>
                         )}
                       </div>
-  
-                      {selectedEvent.link && (
-                        <a 
-                          href={selectedEvent.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="mt-4 px-6 py-2 bg-gray-800 text-white rounded-full text-sm hover:bg-black transition-colors flex items-center gap-2"
-                        >
-                           More Info <ExternalLink size={14} />
-                        </a>
-                      )}
                     </div>
                   )}
   
@@ -204,11 +193,6 @@ type Event = {
                     </>
                   )}
                 </div>
-                
-                {/* カウント表示 */}
-                <p className="mt-4 text-sm text-gray-400 font-serif italic">
-                  {events.findIndex(e => e.id === selectedEvent.id) + 1} / {events.length}
-                </p>
               </div>
             ) : (
               <div className="h-[500px] flex items-center justify-center text-gray-400 italic">
