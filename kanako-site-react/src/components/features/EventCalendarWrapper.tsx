@@ -107,8 +107,6 @@ type Event = {
                         <span className="text-sm text-gray-500 font-mono">
                           {event.date.replace(/-/g, "/")}
                         </span>
-                        {/* テキストタイプならアイコンを表示しても良い */}
-                        {event.type === "text" && <span className="text-xs bg-gray-100 px-2 rounded text-gray-500">Info</span>}
                       </div>
                       <span className="block font-medium text-gray-900 italic font-serif text-lg leading-tight">
                         {event.title}
