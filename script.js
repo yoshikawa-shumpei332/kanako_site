@@ -13,6 +13,27 @@ document.addEventListener('DOMContentLoaded', function () {
     if (slideshowContainer) {
         initializeSlideshow();
     }
+
+    const sideMenu = document.getElementById('side-menu');
+    const nav = document.querySelector('.nav');
+    const hamb = document.querySelector('.hamb');
+
+    document.querySelectorAll('.menu a').forEach(link => {
+        link.addEventListener('click', () => {
+            sideMenu.checked = false;
+        });
+    });
+
+    document.addEventListener('mousedown', function (event) {
+        if (!sideMenu.checked) return;
+
+        const isClickInsideNav = nav.contains(event.target);
+        const isClickOnHamb = hamb.contains(event.target);
+
+        if (!isClickInsideNav && !isClickOnHamb) {
+            sideMenu.checked = false;
+        }
+    });
 });
 
 
