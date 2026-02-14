@@ -573,21 +573,17 @@ footer {
 
 @media (min-width: 837px) {
     .nav {
-        /* 1. Reset the "Curtain" mechanics */
         max-height: none;
-        /* Reset from 100vh */
         height: auto;
-        /* Reset from 0 */
         opacity: 1;
-
-        /* 2. Reset the Positioning */
         position: static;
-        /* Or relative; puts it back in the header flow */
         width: auto;
-        float: right;
+        display: block;
+
+        visibility: visible !important;
+        pointer-events: auto !important;
         background-color: transparent;
         overflow: visible;
-        display: block;
     }
 
     .nav ul {
