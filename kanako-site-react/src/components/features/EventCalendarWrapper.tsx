@@ -2,13 +2,17 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, MapPin, ExternalLink ,Clock} from "lucide-react";
 
 type Event = {
     id: string;
-    url: string;
+    url?: string;
     date: string;
-    event_name: string;
+    title: string;
+    venue?: string;
+    time?: string;
+    link?: string;
+    type: "image" | "text";
   };
 
   export default function EventCalendarWrapper() {
@@ -17,27 +21,52 @@ type Event = {
     const [isZoomed, setIsZoomed] = useState(false);
 
     useEffect(() => {
-      fetch("/api/cloudinary-events")
-        .then((res) => res.json())
-        .then((data) => {
+      const fetchData = async () => {
+        try {
+          const cloudinaryRes = await fetch("/api/cloudinary-events");
+          const cloudinaryData = await cloudinaryRes.json();
+          const cloudinaryEvents: Event[] = cloudinaryData.map((d: any) => ({
+            id: d.id,
+            url: d.url,
+            date: d.date,
+            title: d.event_name || "演奏予定",
+            type:"image",
+          }));
+
+          const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS_tunqBSN0hqHBEu9z8kRyjda6ik3Ksz9cxuPnbtEM4GcNf4RpWYXY4khPEMcffhwPcg8F_k19SvCB/pub?gid=0&single=true&output=csv';
+          const sheetRes = await fetch(sheetUrl);
+          const csvText = await sheetRes.text();
+
+          const sheetRows = csvText.split("\n").slice(1);
+          const sheetEvents: Event[] = sheetRows.map((row, index) => {
+          const [date, venue, title, url, time] = row.split(",");
+          return {
+            id: `sheet-${index}`,
+            date: date?.trim(),
+            venue: venue?.trim(),
+            title: title?.trim(),
+            link: url?.trim(),
+            time: time?.trim(),
+            type: "text",
+          };
+          }).filter(e => e.date);
+
           const today = new Date();
           today.setHours(0,0,0,0);
 
-          const upcomingEvents = data.filter((event: Event) => {
-            const eventDate = new Date(event.date);
-            return eventDate >= today;
-          });
-          // 日付順（昇順）に並び替える
-          const sorted = upcomingEvents.sort((a: Event, b: Event) => 
-            new Date(a.date).getTime() - new Date(b.date).getTime()
-          );
-          setEvents(sorted);
-          
-          // 最初から一番近い予定を表示しておく
-          if (sorted.length > 0) setSelectedEvent(sorted[0]);
-        })
-        .catch((err) => console.error(err));
-    }, []);
+          const allEvents = [...cloudinaryEvents, ...sheetEvents]
+          .filter(e => new Date(e.date) >= today)
+          .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+
+        setEvents(allEvents);
+        if (allEvents.length > 0) setSelectedEvent(allEvents[0]);
+      } catch (err) {
+        console.error("Data fetch error:", err);
+      }
+    };
+
+    fetchData();
+  }, []);
 
     const handlePrev = () => {
       if (!selectedEvent || events.length === 0) return;
@@ -56,9 +85,10 @@ type Event = {
 
     return (
       <>
-        <div className="grid grid-cols-1 md:grid-cols-10 gap-8 items-start max-w-6xl mx-auto">
-          {/* 左側：予定リスト */}
-          <div className="md:col-span-4 w-full p-4 bg-white shadow-lg rounded-xl overflow-hidden border">
+        <div className="grid grid-cols-1 md:grid-cols-10 gap-8 items-start max-w-6xl mx-auto px-4">
+          
+          {/* --- 左側：予定リスト --- */}
+          <div className="md:col-span-4 w-full bg-white shadow-lg rounded-xl overflow-hidden border">
             <div className="bg-gray-800 text-white p-4 font-bold text-center">
               Upcoming Events
             </div>
@@ -72,13 +102,21 @@ type Event = {
                       selectedEvent?.id === event.id ? "bg-red-50 border-l-4 border-l-red-500" : "hover:bg-gray-50"
                     }`}
                   >
-                    <div>
-                      <span className="block text-sm text-gray-500">
-                        {event.date.replace(/-/g, "/")}
+                    <div className="w-full">
+                      <div className="flex justify-between items-baseline mb-1">
+                        <span className="text-sm text-gray-500 font-mono">
+                          {event.date.replace(/-/g, "/")}
+                        </span>
+                      </div>
+                      <span className="block font-medium text-gray-900 italic font-serif text-lg leading-tight">
+                        {event.title}
                       </span>
-                      <span className="font-medium text-gray-900 italic font-serif">
-                        {event.event_name}
-                      </span>
+                      {/* 会場名があれば表示 */}
+                      {event.venue && (
+                        <span className="block text-xs text-gray-400 mt-1 flex items-center gap-1">
+                          <MapPin size={12} /> {event.venue}
+                        </span>
+                      )}
                     </div>
                   </button>
                 ))
@@ -88,8 +126,8 @@ type Event = {
             </div>
           </div>
       
-          {/* 右側：画像詳細 */}
-          <div className="md:col-span-6 w-full max-w-[500px] rounded-xl p-4 flex flex-col items-center justify-center bg-white">
+          {/* --- 右側：詳細表示エリア（画像 or テキストカード） --- */}
+          <div className="md:col-span-6 w-full flex flex-col items-center justify-center bg-white">
             {selectedEvent ? (
               <div className="w-full text-center group"> 
                 <p className="mb-4 font-bold text-lg font-serif">
@@ -139,14 +177,14 @@ type Event = {
                     <>
                       <button 
                         onClick={handlePrev}
-                        className="absolute left-4 top-1/2 -translate-y-1/2 bg-gray-500/80 hover:bg-gray-900 p-3 rounded-full shadow-lg z-10 transition-all opacity-100 md:opacity-0 md:group-hover:opacity-100"
+                        className="absolute left-4 top-1/2 -translate-y-1/2 bg-gray-500/80 hover:bg-gray-700 p-3 rounded-full shadow-lg z-20 transition-all opacity-100"
                       >
                         <ChevronLeft size={24} className="text-white" /> 
                       </button>
-
+  
                       <button 
                         onClick={handleNext}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 bg-gray-500/80 hover:bg-gray-900 p-3 rounded-full shadow-lg z-10 transition-all opacity-100 md:opacity-0 md:group-hover:opacity-100"
+                        className="absolute right-4 top-1/2 -translate-y-1/2 bg-gray-500/80 hover:bg-gray-700 p-3 rounded-full shadow-lg z-20 transition-all opacity-100"
                       >
                         <ChevronRight size={24} className="text-white" />
                       </button>
@@ -155,15 +193,18 @@ type Event = {
                 </div>
               </div>
             ) : (
-              <p className="text-gray-400 text-center">予定を選択すると<br/>詳細画像が表示されます</p>
+              <div className="h-[500px] flex items-center justify-center text-gray-400 italic">
+                Loading events...
+              </div>
             )}
           </div> 
         </div> 
-
-        {isZoomed && selectedEvent && (
+  
+        {/* --- 拡大モーダル (画像タイプのみ表示) --- */}
+        {isZoomed && selectedEvent && selectedEvent.type === "image" && selectedEvent.url && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 animate-in fade-in duration-300">
             <div 
-              className="absolute inset-0 bg-black/90 cursor-zoom-out" 
+              className="absolute inset-0 bg-black/90 cursor-zoom-out pointer-events-auto" 
               onClick={() => setIsZoomed(false)} 
             />
             <div className="relative w-full h-full max-w-4xl max-h-[90vh] flex items-center justify-center pointer-events-none">
@@ -171,11 +212,11 @@ type Event = {
                 src={selectedEvent.url}
                 alt="Zoomed Event"
                 fill
-                className="object-contain"
+                className="object-contain pointer-events-auto"
                 onClick={(e) => e.stopPropagation()}
               />
               <button 
-                className="absolute top-0 right-0 p-4 text-white hover:text-gray-300 text-2xl"
+                className="absolute top-0 right-0 p-4 text-white hover:text-gray-300 text-4xl pointer-events-auto z-50"
                 onClick={() => setIsZoomed(false)}
               >
                 ×
