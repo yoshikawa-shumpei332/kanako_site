@@ -1,4 +1,4 @@
-import EventCalendarWrapper from "@/components/features/EventCalendarWrapper";
+import EventCalendarWrapper from "../..//components/features/EventCalendarWrapper";
 
 export default function LivePage() {
   return (
