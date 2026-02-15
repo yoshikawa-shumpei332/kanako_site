@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, MapPin, ExternalLink ,Clock} from "lucide-react";
+import { ChevronLeft, ChevronRight, MapPin ,Clock} from "lucide-react";
 
 type Event = {
     id: string;
