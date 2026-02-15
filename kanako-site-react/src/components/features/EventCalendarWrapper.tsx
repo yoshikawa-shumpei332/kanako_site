@@ -91,16 +91,50 @@ type Event = {
           {/* 右側：画像詳細 */}
           <div className="md:col-span-6 w-full max-w-[500px] rounded-xl p-4 flex flex-col items-center justify-center bg-white">
             {selectedEvent ? (
-              <div className="text-center w-full group"> 
-                <p className="mb-4 font-bold text-lg">{selectedEvent.date} の公演</p>
-                <div className="relative h-[500px] w-full rounded-xl overflow-hidden ">
-                  <Image 
-                    src={selectedEvent.url} 
-                    alt="Event Detail" 
-                    fill 
-                    className="object-contain shadow-md rounded cursor-zoom-in"
-                    onClick={() => setIsZoomed(true)}
-                  />
+              <div className="w-full text-center group"> 
+                <p className="mb-4 font-bold text-lg font-serif">
+                {selectedEvent.date} の公演
+                </p>
+                
+                {/* 表示エリア：ここが画像かテキストかで切り替わる */}
+                <div className="relative h-[500px] w-full rounded-xl overflow-hidden border border-gray-100 shadow-md flex items-center justify-center">
+                  
+                  {selectedEvent.type === "image" && selectedEvent.url ? (
+                    // --- A. 画像パターンの表示 ---
+                    <Image 
+                      src={selectedEvent.url} 
+                      alt="Event Detail" 
+                      fill 
+                      className="object-contain cursor-zoom-in"
+                      onClick={() => setIsZoomed(true)}
+                    />
+                  ) : (
+                    // --- B. テキストパターンの表示（招待状のようなデザイン） ---
+                    <div className="p-8 w-full h-full flex flex-col items-center justify-center gap-6 bg-white">
+                      <div className="border-y-4 border-double border-gray-200 py-8 w-full">
+                        <h3 className="text-2xl md:text-3xl font-serif italic text-gray-800 leading-relaxed px-4">
+                          {selectedEvent.title}
+                        </h3>
+                      </div>
+                      
+                      <div className="space-y-4 text-gray-600 font-serif text-lg">
+                        {selectedEvent.venue && (
+                          <div className="flex items-center justify-center gap-2">
+                            <MapPin className="text-red-400" size={20} />
+                            <span>{selectedEvent.venue}</span>
+                          </div>
+                        )}
+                        {selectedEvent.time && (
+                          <div className="flex items-center justify-center gap-2">
+                            <Clock className="text-red-400" size={20} />
+                            <span>開始時間:{selectedEvent.time}</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+  
+                  {/* --- 共通の矢印ボタン（画像・テキストどちらでも表示） --- */}
                   {events.length > 1 && (
                     <>
                       <button 
