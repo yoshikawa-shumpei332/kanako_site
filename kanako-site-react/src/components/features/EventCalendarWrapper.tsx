@@ -131,11 +131,11 @@ type Event = {
             {selectedEvent ? (
               <div className="w-full text-center group"> 
                 <p className="mb-4 font-bold text-lg font-serif">
-                  {selectedEvent.date.replace(/-/g, "/")} の公演
+                {selectedEvent.date} の公演
                 </p>
                 
                 {/* 表示エリア：ここが画像かテキストかで切り替わる */}
-                <div className="relative h-[500px] w-full rounded-xl overflow-hidden bg-gray-50 border border-gray-100 shadow-md flex items-center justify-center">
+                <div className="relative h-[500px] w-full rounded-xl overflow-hidden border border-gray-100 shadow-md flex items-center justify-center">
                   
                   {selectedEvent.type === "image" && selectedEvent.url ? (
                     // --- A. 画像パターンの表示 ---
