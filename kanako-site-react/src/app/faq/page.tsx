@@ -1,28 +1,14 @@
 import Link from "next/link";
-
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 export default function FaqPage() {
   return (
-    <div className="min-h-screen bg-white font-sans text-gray-800">
-      {/* --- ヘッダー（トップページと共通のデザイン） --- */}
-      <header className="sticky top-0 z-50 bg-white shadow-sm">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-xl font-bold tracking-widest">
-            <Link href="/">越智可奈子</Link>
-          </h1>
-          <nav>
-            <ul className="flex gap-6 text-sm font-medium">
-              <li><Link href="/#bio" className="hover:text-gray-500">Biography</Link></li>
-              <li><Link href="/#live" className="hover:text-gray-500">Live</Link></li>
-              <li><Link href="/#past-events" className="hover:text-gray-500">Past Events</Link></li>
-              <li><Link href="/contact" className="hover:text-gray-500">Contact</Link></li>
-              <li><Link href="/faq" className="hover:text-gray-500 font-bold">FAQ</Link></li>
-            </ul>
-          </nav>
-        </div>
-      </header>
+  
+    <div className="min-h-screen flex flex-col bg-white font-sans text-gray-800">
+      <Header />
 
       {/* --- メインコンテンツ --- */}
-      <main className="container mx-auto px-4 py-16 max-w-3xl">
+      <main className="flex-grow container mx-auto px-4 py-16 max-w-3xl">
         <h2 className="text-3xl font-serif mb-12 text-center border-b pb-4">よくある質問 (FAQ)</h2>
 
         <div className="space-y-4">
@@ -66,13 +52,9 @@ export default function FaqPage() {
           </Link>
         </div>
       </main>
-
-      {/* --- フッター --- */}
-      <footer className="py-8 text-center bg-gray-900 text-white text-sm mt-20">
-        <div className="container mx-auto">
-          <p>&copy; 2026 ochi kanako. All Rights Reserved.</p>
-        </div>
-      </footer>
-    </div>
+      <Footer />
+      </div>
+      
+    
   );
 }
