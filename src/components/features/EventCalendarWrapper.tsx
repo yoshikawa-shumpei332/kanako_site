@@ -47,7 +47,7 @@ type Event = {
             title: title?.trim(),
             link: url?.trim(),
             time: time?.trim(),
-            type: "text",
+            type: "text" as const,
           };
           }).filter(e => e.date);
 
