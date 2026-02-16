@@ -24,7 +24,7 @@ export default function Home() {
               </div>
             </div>
             <div className="w-full md:w-1/2">
-              <h2 className="text-3xl md:text-4xl font-serif mb-8 border-l-4 border-pink-500 pl-4">Biography</h2>
+              <h2 className="text-3xl md:text-4xl font-serif mb-8 text-center pl-4">Biography</h2>
               <p className="leading-relaxed text-gray-700 text-sm md:text-base space-y-4">
                 北九州市出身。３歳からピアノを始める。<br />
                 大分県立芸術文化短期大学音楽科ピアノ専攻卒業及び、同大学専攻科修了。<br />
