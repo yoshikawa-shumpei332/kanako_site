@@ -47,11 +47,12 @@ export default function Home() {
             </div>
           </div>
         </section>
+        {/* --- Contact --- */}
+        <Contact />
 
         {/* --- Past Events  --- */}
         <PastEvent />
-        {/* --- Contact --- */}
-        <Contact />
+        
       </main>
 
       <Footer />    
