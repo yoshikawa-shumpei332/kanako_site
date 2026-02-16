@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Menu, X} from "lucide-react";
 import { useState, useEffect } from "react";
-
+import { IoLogoInstagram } from "react-icons/io5";
 export default function Header() {
     const [isOpen, setIsOpen] = useState(false);
     const closeMenu = () => setIsOpen(false);
@@ -78,6 +78,19 @@ export default function Header() {
                 <Link href="/faq" onClick={closeMenu} className="block">FAQ</Link>
               </li>
             </ul>
+            <div className="mt-12">
+                          <a
+                            href="https://www.instagram.com/kanakoochi"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group inline-flex flex-col items-center gap-2"
+                          >
+                            <IoLogoInstagram
+                              size={48}
+                              className="text-[#E1306C] group-hover:scale-110 transition-transform"
+                            />
+                          </a>
+                        </div>
           </nav>
         </div>
       </aside>

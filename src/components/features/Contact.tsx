@@ -2,7 +2,7 @@ import Link from "next/link";
 import { IoLogoInstagram } from "react-icons/io5";
 export default function Contact() {
     return (
-        <section id="contact" className="py-24 text-center bg-white border-t">
+        <section id="contact" className="pt-12 text-center bg-white border-t">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-serif mb-4">Contact</h2>
             <p className="mb-8 text-gray-600 max-w-md mx-auto">教室、出演依頼、その他お問い合わせはこちらから。</p>
@@ -23,7 +23,6 @@ export default function Contact() {
                   size={48}
                   className="text-[#E1306C] group-hover:scale-110 transition-transform"
                 />
-                <span className="text-xs text-gray-400 font-medium tracking-widest">INSTAGRAM</span>
               </a>
             </div>
           </div>

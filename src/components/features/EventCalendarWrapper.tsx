@@ -4,6 +4,7 @@ async function fetchAllEvents() {
   const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
   const apiKey = process.env.CLOUDINARY_API_KEY;
   const apiSecret = process.env.CLOUDINARY_API_SECRET;
+  const reloadTime = 86400
 
 
   let cloudinaryEvents: any[] = [];
@@ -11,7 +12,7 @@ async function fetchAllEvents() {
     const url = `https://api.cloudinary.com/v1_1/${cloudName}/resources/image?context=true`;
     const res = await fetch(url, {
       headers: { Authorization: `Basic ${btoa(`${apiKey}:${apiSecret}`)}` },
-      cache: 'force-cache'
+      next: { revalidate: reloadTime }
     });
     if (res.ok) {
       const data = await res.json();
@@ -32,7 +33,7 @@ async function fetchAllEvents() {
   }
 
   const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS_tunqBSN0hqHBEu9z8kRyjda6ik3Ksz9cxuPnbtEM4GcNf4RpWYXY4khPEMcffhwPcg8F_k19SvCB/pub?gid=0&single=true&output=csv';
-  const sheetRes = await fetch(sheetUrl, { cache: 'force-cache' }); 
+  const sheetRes = await fetch(sheetUrl, { next: { revalidate: reloadTime } }); 
   const csvText = await sheetRes.text();
   const sheetRows = csvText.split("\n").slice(1);
   const sheetEvents = sheetRows.map((row, index) => {
