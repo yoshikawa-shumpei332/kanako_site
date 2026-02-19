@@ -12,7 +12,8 @@ export default function PastEvent() {
         "S__268574751_0.jpg",
         "S__268574752_0.jpg",
         "S__268574755_0.jpg",
-        "S__268574756_0.jpg"
+        "S__268574756_0.jpg",
+        "IMG_7137_guu1hh.png"
       ];
     useEffect(() => {
         const timer = setInterval(() => {
