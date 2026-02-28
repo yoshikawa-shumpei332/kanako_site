@@ -18,9 +18,9 @@ export default function Header() {
           {/* Desktop Navigation */}
           <nav className="hidden md:block">
             <ul className="flex gap-8 text-sm font-medium">
-              <li><a href="#bio" className="hover:text-pink-600 transition">Biography</a></li>
-              <li><a href="#live" className="hover:text-pink-600 transition">Live</a></li>
-              <li><a href="#past-events" className="hover:text-pink-600 transition">Past Events</a></li>
+              <li><a href="/#bio" className="hover:text-pink-600 transition">Biography</a></li>
+              <li><a href="/#live" className="hover:text-pink-600 transition">Live</a></li>
+              <li><a href="/#past-events" className="hover:text-pink-600 transition">Past Events</a></li>
               <li><Link href="/contact" className="hover:text-pink-600 transition">Contact</Link></li>
               <li><Link href="/faq" className="hover:text-pink-600 transition">FAQ</Link></li>
             </ul>
