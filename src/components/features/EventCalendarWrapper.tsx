@@ -49,10 +49,7 @@ async function fetchAllEvents() {
     };
   }).filter(e => e.date);
 
-  const today = new Date();
-  today.setHours(0,0,0,0);
   const allEvents = [...cloudinaryEvents, ...sheetEvents]
-    .filter(e => new Date(e.date) >= today)
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
   return allEvents;
