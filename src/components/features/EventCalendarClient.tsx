@@ -1,6 +1,6 @@
 "use client"; // ← 接客役なので "use client" が必要！
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, MapPin, Clock } from "lucide-react";
 
@@ -17,22 +17,35 @@ type Event = {
 
 // ★ 親（サーバー）から完成済みのデータ(initialEvents)を受け取ります！
 export default function EventCalendarClient({ initialEvents }: { initialEvents: Event[] }) {
-  // ★ 受け取ったデータを初期値にセットするだけ！（useEffectはもう不要です）
-  const [selectedEvent, setSelectedEvent] = useState<Event | null>(initialEvents[0] || null);
+  
+  // 🌟 ここでブラウザを開いた瞬間の「今日」を取得し、過去の予定を弾く
+  const upcomingEvents = useMemo(() => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    return initialEvents.filter((e) => {
+      if (!e.date) return false;
+      return new Date(e.date) >= today;
+    });
+  }, [initialEvents]);
+
+  // 🌟 初期値は、絞り込み終わった upcomingEvents からセットする
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(upcomingEvents[0] || null);
   const [isZoomed, setIsZoomed] = useState(false);
 
+  // 🌟 handlePrev / handleNext も initialEvents ではなく upcomingEvents を基準にする
   const handlePrev = () => {
-    if (!selectedEvent || initialEvents.length === 0) return;
-    const currentIndex = initialEvents.findIndex(e => e.id === selectedEvent.id);
-    const prevIndex = (currentIndex - 1 + initialEvents.length) % initialEvents.length;
-    setSelectedEvent(initialEvents[prevIndex]);
+    if (!selectedEvent || upcomingEvents.length === 0) return;
+    const currentIndex = upcomingEvents.findIndex(e => e.id === selectedEvent.id);
+    const prevIndex = (currentIndex - 1 + upcomingEvents.length) % upcomingEvents.length;
+    setSelectedEvent(upcomingEvents[prevIndex]);
   };
 
   const handleNext = () => {
-    if (!selectedEvent || initialEvents.length === 0) return;
-    const currentIndex = initialEvents.findIndex(e => e.id === selectedEvent.id);
-    const nextIndex = (currentIndex + 1) % initialEvents.length;
-    setSelectedEvent(initialEvents[nextIndex]);
+    if (!selectedEvent || upcomingEvents.length === 0) return;
+    const currentIndex = upcomingEvents.findIndex(e => e.id === selectedEvent.id);
+    const nextIndex = (currentIndex + 1) % upcomingEvents.length;
+    setSelectedEvent(upcomingEvents[nextIndex]);
   };
 
   return (
@@ -44,8 +57,9 @@ export default function EventCalendarClient({ initialEvents }: { initialEvents: 
             Upcoming Events
           </div>
           <div className="max-h-[380px] overflow-y-auto">
-            {initialEvents.length > 0 ? (
-              initialEvents.map((event) => (
+            {/* 🌟 マップ処理も upcomingEvents に変更 */}
+            {upcomingEvents.length > 0 ? (
+              upcomingEvents.map((event) => (
                 <button
                   key={event.id}
                   onClick={() => setSelectedEvent(event)}
@@ -117,7 +131,8 @@ export default function EventCalendarClient({ initialEvents }: { initialEvents: 
                   </div>
                 )}
 
-                {initialEvents.length > 1 && (
+                {/* 🌟 矢印の表示条件も upcomingEvents に変更 */}
+                {upcomingEvents.length > 1 && (
                   <>
                     <button onClick={handlePrev} className="absolute left-4 top-1/2 -translate-y-1/2 bg-gray-500/80 hover:bg-gray-700 p-3 rounded-full shadow-lg z-20 transition-all opacity-100">
                       <ChevronLeft size={24} className="text-white" /> 
