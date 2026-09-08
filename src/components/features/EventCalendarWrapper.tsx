@@ -6,7 +6,7 @@ async function fetchAllEvents() {
   const apiSecret = process.env.CLOUDINARY_API_SECRET;
   const reloadTime = 86400
 
-
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let cloudinaryEvents: any[] = [];
   if (cloudName && apiKey && apiSecret) {
     const url = `https://api.cloudinary.com/v1_1/${cloudName}/resources/image?context=true`;
@@ -16,6 +16,7 @@ async function fetchAllEvents() {
     });
     if (res.ok) {
       const data = await res.json();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       cloudinaryEvents = data.resources.map((item: any) => {
         const customDate = item.context?.custom?.["event-date"];
         const customTitle = item.context?.custom?.title;
