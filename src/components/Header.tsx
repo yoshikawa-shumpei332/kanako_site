@@ -1,9 +1,10 @@
-
 "use client";
 import Link from "next/link";
 import { Menu, X} from "lucide-react";
-import { useState, useEffect } from "react";
+// 修正1: useEffect を削除しました
+import { useState } from "react";
 import { IoLogoInstagram } from "react-icons/io5";
+
 export default function Header() {
     const [isOpen, setIsOpen] = useState(false);
     const closeMenu = () => setIsOpen(false);
@@ -18,9 +19,10 @@ export default function Header() {
           {/* Desktop Navigation */}
           <nav className="hidden md:block">
             <ul className="flex gap-8 text-sm font-medium">
-              <li><a href="/#bio" className="hover:text-pink-600 transition">Biography</a></li>
-              <li><a href="/#live" className="hover:text-pink-600 transition">Live</a></li>
-              <li><a href="/#past-events" className="hover:text-pink-600 transition">Past Events</a></li>
+              {/* 修正2: <a> タグを <Link> に変更しました */}
+              <li><Link href="/#bio" className="hover:text-pink-600 transition">Biography</Link></li>
+              <li><Link href="/#live" className="hover:text-pink-600 transition">Live</Link></li>
+              <li><Link href="/#past-events" className="hover:text-pink-600 transition">Past Events</Link></li>
               <li><Link href="/contact" className="hover:text-pink-600 transition">Contact</Link></li>
               <li><Link href="/faq" className="hover:text-pink-600 transition">FAQ</Link></li>
             </ul>
@@ -36,8 +38,6 @@ export default function Header() {
           </button>
         </div>
       </header>
-
-      {/* --- MOVED MOBILE MENU OUTSIDE HEADER --- */}
 
       {/* Mobile Menu Overlay */}
       <div
@@ -62,14 +62,15 @@ export default function Header() {
 
           <nav className="px-8">
             <ul className="flex flex-col gap-8 text-lg font-bold text-gray-900">
+              {/* 修正2: スマホメニューの <a> タグも同様に <Link> に変更しました（他のページからでもホームに戻れるように "/" を追加しています） */}
               <li>
-                <a href="#bio" onClick={closeMenu} className="block border-b border-gray-100 pb-2">Biography</a>
+                <Link href="/#bio" onClick={closeMenu} className="block border-b border-gray-100 pb-2">Biography</Link>
               </li>
               <li>
-                <a href="#live" onClick={closeMenu} className="block border-b border-gray-100 pb-2">Live</a>
+                <Link href="/#live" onClick={closeMenu} className="block border-b border-gray-100 pb-2">Live</Link>
               </li>
               <li>
-                <a href="#past-events" onClick={closeMenu} className="block border-b border-gray-100 pb-2">Past Events</a>
+                <Link href="/#past-events" onClick={closeMenu} className="block border-b border-gray-100 pb-2">Past Events</Link>
               </li>
               <li>
                 <Link href="/contact" onClick={closeMenu} className="block border-b border-gray-100 pb-2">Contact</Link>
