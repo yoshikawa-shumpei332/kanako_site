@@ -55,6 +55,7 @@ Next.js (App Router) と Tailwind CSS を使用して構築された、ハイブ
 
 ---
 
+
 ## 💻 開発者向けセットアップ
 
 ### 環境変数 (`.env.local`)
@@ -71,3 +72,4 @@ NEXT_PUBLIC_GOOGLE_SHEET_URL=[https://docs.google.com/spreadsheets/d/e/.../pub?o
 ```
 
 
+updateがうまくされないので今後修正が必要
