@@ -4,7 +4,7 @@ async function fetchAllEvents() {
   const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
   const apiKey = process.env.CLOUDINARY_API_KEY;
   const apiSecret = process.env.CLOUDINARY_API_SECRET;
-  const reloadTime = 86400
+  const reloadTime = 3600
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let cloudinaryEvents: any[] = [];
